@@ -53,7 +53,7 @@ public class GameState {
                 b.x += hSpeed * dt;
                 if (b.x >= SPLITTER_X) {
                     b.x = SPLITTER_X;
-                    // lock lane at splitter moment
+                    
                     b.assignedLane = splitterPosition;
                     b.targetX = Config.laneCenterX(b.assignedLane);
                     // record fall start to compute a perfect straight line
@@ -61,19 +61,19 @@ public class GameState {
                     b.fallStartY = b.y;
                     b.state = BoxState.FALLING;
                 }
-            } else { // FALLING
+            } else { // cia krentant jau
                 double targetY = Config.CONTAINERS_Y;
 
-                // vertical fall
+                //cia zemyn
                 b.y += vSpeed * dt;
 
-                // progress from splitter to containers (0..1)
+                // splitter iki boxes
                 double totalFall = targetY - b.fallStartY;
                 double t = totalFall <= 0 ? 1.0 : (b.y - b.fallStartY) / totalFall;
                 if (t < 0) t = 0;
                 if (t > 1) t = 1;
 
-                // x follows a straight line from splitter X to lane center
+                // staraight linija
                 b.x = b.fallStartX + (b.targetX - b.fallStartX) * t;
 
                 // landed?
